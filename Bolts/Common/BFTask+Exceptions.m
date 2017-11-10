@@ -15,7 +15,7 @@ static BOOL taskCatchExceptions = YES;
 
 @implementation BFTaskExceptionDelegateHolder
 
-+ (BFTaskExceptionDelegateHolder *)holder {
++ (BFTaskExceptionDelegateHolder *)delegateHolder {
     static dispatch_once_t onceToken;
     static BFTaskExceptionDelegateHolder *holder;
     dispatch_once(&onceToken, ^{
