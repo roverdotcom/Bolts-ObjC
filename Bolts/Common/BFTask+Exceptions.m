@@ -13,12 +13,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 static BOOL taskCatchExceptions = YES;
 
-BOOL BFTaskCatchesExceptions(void) {
-    return taskCatchExceptions;
+@implementation BFTaskExceptionDelegateHolder
+
++ (BFTaskExceptionDelegateHolder *)holder {
+    static dispatch_once_t onceToken;
+    static BFTaskExceptionDelegateHolder *holder;
+    dispatch_once(&onceToken, ^{
+        holder = [[BFTaskExceptionDelegateHolder alloc] init];
+    });
+    
+    return holder;
 }
 
-void BFTaskSetCatchesExceptions(BOOL catchExceptions) {
-    taskCatchExceptions = catchExceptions;
+@end
+
+BOOL BFTaskCatchesExceptions(void) {
+    id<BFTaskExceptionHandlingDelegate> delegate = [[BFTaskExceptionDelegateHolder delegateHolder] delegate];
+    if (delegate) {
+        return [delegate shouldCatchExceptions];
+    }
+    return YES;
 }
 
 NS_ASSUME_NONNULL_END

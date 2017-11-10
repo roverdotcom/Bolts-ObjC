@@ -13,6 +13,24 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class BFTask;
+
+@protocol BFTaskExceptionHandlingDelegate
+
+- (void)handleFaultedTask:(BFTask *)task;
+
+- (BOOL)shouldCatchExceptions;
+
+@end
+
+@interface BFTaskExceptionDelegateHolder: NSObject
+
+@property (weak, nonatomic) id<BFTaskExceptionHandlingDelegate> delegate;
+
++ (BFTaskExceptionDelegateHolder *)delegateHolder;
+
+@end
+
 /**
  Returns whether all instances of `BFTask` should automatically @try/@catch exceptions in continuation blocks. Default: `YES`.
 
