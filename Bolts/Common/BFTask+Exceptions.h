@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) id<BFTaskExceptionHandlingDelegate> delegate;
 
-+ (BFTaskExceptionDelegateHolder *)delegateHolder;
++ (BFTaskExceptionDelegateHolder *)sharedDelegateHolder;
 
 @end
 

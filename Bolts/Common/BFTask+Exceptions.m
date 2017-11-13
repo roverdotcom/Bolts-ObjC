@@ -15,7 +15,7 @@ static BOOL taskCatchExceptions = YES;
 
 @implementation BFTaskExceptionDelegateHolder
 
-+ (BFTaskExceptionDelegateHolder *)delegateHolder {
++ (BFTaskExceptionDelegateHolder *)sharedDelegateHolder {
     static dispatch_once_t onceToken;
     static BFTaskExceptionDelegateHolder *holder;
     dispatch_once(&onceToken, ^{
@@ -28,11 +28,11 @@ static BOOL taskCatchExceptions = YES;
 @end
 
 BOOL BFTaskCatchesExceptions(void) {
-    id<BFTaskExceptionHandlingDelegate> delegate = [[BFTaskExceptionDelegateHolder delegateHolder] delegate];
+    id<BFTaskExceptionHandlingDelegate> delegate = [[BFTaskExceptionDelegateHolder sharedDelegateHolder] delegate];
     if (delegate) {
         return [delegate shouldCatchExceptions];
     }
-    return YES;
+    return taskCatchExceptions;
 }
 
 NS_ASSUME_NONNULL_END
