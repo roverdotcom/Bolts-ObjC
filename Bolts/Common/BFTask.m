@@ -407,7 +407,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
         id result = nil;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        if ([[[BFTaskExceptionDelegateHolder sharedDelegateHolder] delegate] shouldCatchExceptions]) {
+        if (BFTaskCatchesExceptions()) {
             @try {
                 result = block(self);
             } @catch (NSException *exception) {
