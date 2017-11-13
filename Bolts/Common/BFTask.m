@@ -407,7 +407,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
         id result = nil;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        if (BFTaskCatchesExceptions()) {
+        if ([[[BFTaskExceptionDelegateHolder sharedDelegateHolder] delegate] shouldCatchExceptions]) {
             @try {
                 result = block(self);
             } @catch (NSException *exception) {
@@ -415,6 +415,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
                       @" This behavior is discouraged and will be removed in a future release."
                       @" Caught Exception: %@", exception);
                 tcs.exception = exception;
+                [[[BFTaskExceptionDelegateHolder sharedDelegateHolder] delegate] handleFaultedTask:tcs.task];
                 return;
             }
         } else {
