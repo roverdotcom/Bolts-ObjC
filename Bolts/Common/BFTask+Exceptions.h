@@ -36,15 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return Boolean value indicating whether exceptions are being caught.
  */
-extern BOOL BFTaskCatchesExceptions(void)
-__attribute__((deprecated("This is temporary API and will be removed in a future release.")));
-
-/**
- Set whether all instances of `BFTask` should automatically @try/@catch exceptions in continuation blocks. Default: `YES`.
-
- @param catchExceptions Boolean value indicating whether exceptions shoudl be caught.
- */
-extern void BFTaskSetCatchesExceptions(BOOL catchExceptions)
-__attribute__((deprecated("This is a temporary API and will be removed in a future release.")));
+extern BOOL BFTaskCatchesExceptions(void);
 
 NS_ASSUME_NONNULL_END

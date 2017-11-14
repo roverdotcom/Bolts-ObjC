@@ -152,11 +152,8 @@ __attribute__((deprecated("`BFTask` exception handling is deprecated and will be
 
 /*!
  The exception of a failed task.
-
- @deprecated `BFTask` exception handling is deprecated and will be removed in a future release.
  */
-@property (nullable, nonatomic, strong, readonly) NSException *exception
-__attribute__((deprecated("`BFTask` exception handling is deprecated and will be removed in a future release.")));
+@property (nullable, nonatomic, strong, readonly) NSException *exception;
 
 /*!
  Whether this task has been cancelled.
