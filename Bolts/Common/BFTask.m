@@ -415,6 +415,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
                       @" This behavior is discouraged and will be removed in a future release."
                       @" Caught Exception: %@", exception);
                 tcs.exception = exception;
+                [[[BFTaskExceptionDelegateHolder sharedDelegateHolder] delegate] handleFaultedTask:tcs.task];
                 return;
             }
         } else {
