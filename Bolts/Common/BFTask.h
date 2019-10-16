@@ -283,7 +283,7 @@ __attribute__((deprecated("`BFTask` exception handling is deprecated and will be
  it's running. It should be avoided. This method logs a warning
  message if it is used on the main thread.
  */
-- (void)waitUntilFinished;
+- (void)waitUntilFinished __attribute__((deprecated("-waitUntilFinished should not be used. If being used in tests, use -assertTaskCompleted instead.")));
 
 @end
 
