@@ -285,6 +285,11 @@ __attribute__((deprecated("`BFTask` exception handling is deprecated and will be
  */
 - (void)waitUntilFinished __attribute__((deprecated("-waitUntilFinished should not be used. If being used in tests, use -assertTaskCompleted instead.")));
 
+#pragma mark - Rover Additions
+
++ (void)startTrackingTestTasks;
++ (void)neutralizeTestTasks;
+
 @end
 
 NS_ASSUME_NONNULL_END

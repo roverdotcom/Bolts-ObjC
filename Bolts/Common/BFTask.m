@@ -57,6 +57,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
     _condition = [[NSCondition alloc] init];
     _callbacks = [NSMutableArray array];
 
+    [BFTask addTestTask:self];
     return self;
 }
 
@@ -66,6 +67,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
     [self trySetResult:result];
 
+    [BFTask addTestTask:self];
     return self;
 }
 
@@ -75,6 +77,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
     [self trySetError:error];
 
+    [BFTask addTestTask:self];
     return self;
 }
 
@@ -84,6 +87,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
     [self trySetException:exception];
 
+    [BFTask addTestTask:self];
     return self;
 }
 
@@ -93,6 +97,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
 
     [self trySetCancelled];
 
+    [BFTask addTestTask:self];
     return self;
 }
 
@@ -557,6 +562,42 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
             cancelled ? @"YES" : @"NO",
             faulted ? @"YES" : @"NO",
             resultDescription];
+}
+
+#pragma mark - Storing Tasks from
+
++ (NSHashTable *)testTasks {
+    static NSHashTable *_testTasks = nil;
+    if (_testTasks == nil) {
+        _testTasks = [NSHashTable weakObjectsHashTable];
+    }
+
+    return _testTasks;
+}
+
+static BOOL _shouldTrackTestTasks = NO;
+
++ (void)startTrackingTestTasks {
+    _shouldTrackTestTasks = YES;
+}
+
++ (void)addTestTask:(BFTask *)task {
+    if (_shouldTrackTestTasks) {
+        [[self testTasks] addObject:task];
+    }
+}
+
++ (void)neutralizeTestTasks {
+    for (BFTask *task in [[self testTasks] allObjects]) {
+        [task neutralize];
+    }
+
+    [[self testTasks] removeAllObjects];
+    _shouldTrackTestTasks = NO;
+}
+
+- (void)neutralize {
+    // TO BE IMPLEMENTED (IOS-5125)
 }
 
 @end
