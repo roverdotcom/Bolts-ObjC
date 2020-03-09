@@ -43,6 +43,8 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
 @property (nonatomic, strong) NSCondition *condition;
 @property (nonatomic, strong) NSMutableArray *callbacks;
 
+@property (nonatomic, weak) id testCase;
+
 @end
 
 @implementation BFTask
@@ -564,7 +566,7 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
             resultDescription];
 }
 
-#pragma mark - Storing Tasks from
+#pragma mark - Storing Tasks from Tests
 
 + (NSHashTable *)testTasks {
     static NSHashTable *_testTasks = nil;
@@ -575,25 +577,29 @@ NSString *const BFTaskMultipleExceptionsUserInfoKey = @"exceptions";
     return _testTasks;
 }
 
-static BOOL _shouldTrackTestTasks = NO;
+static id _Nullable _currentTestCase = nil;
 
-+ (void)startTrackingTestTasks {
-    _shouldTrackTestTasks = YES;
++ (void)startTrackingTasksInTestCase:(id)testCase {
+    _currentTestCase = testCase;
 }
 
 + (void)addTestTask:(BFTask *)task {
-    if (_shouldTrackTestTasks) {
+    if (_currentTestCase) {
+        [task setTestCase:_currentTestCase];
         [[self testTasks] addObject:task];
     }
 }
 
 + (void)neutralizeTestTasks {
     for (BFTask *task in [[self testTasks] allObjects]) {
+        if ([task isCompleted] == NO) {
+            NSLog(@"task will be neutralized: %@, created in test case: %@", task, task.testCase);
+        }
         [task neutralize];
     }
 
     [[self testTasks] removeAllObjects];
-    _shouldTrackTestTasks = NO;
+    _currentTestCase = nil;
 }
 
 - (void)neutralize {

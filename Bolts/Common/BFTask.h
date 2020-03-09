@@ -287,7 +287,7 @@ __attribute__((deprecated("`BFTask` exception handling is deprecated and will be
 
 #pragma mark - Rover Additions
 
-+ (void)startTrackingTestTasks;
++ (void)startTrackingTasksInTestCase:(id)testCase;
 + (void)neutralizeTestTasks;
 
 @end
