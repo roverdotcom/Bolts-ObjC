@@ -603,7 +603,7 @@ static id _Nullable _currentTestCase = nil;
 }
 
 - (void)neutralize {
-    // TO BE IMPLEMENTED (IOS-5125)
+    [self.callbacks removeAllObjects];
 }
 
 @end
