@@ -603,7 +603,7 @@ static id _Nullable _currentTestCase = nil;
 }
 
 - (void)neutralize {
-    [self.callbacks removeAllObjects];
+//    [self.callbacks removeAllObjects];
 }
 
 @end
