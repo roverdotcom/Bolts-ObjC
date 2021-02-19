@@ -79,16 +79,6 @@ NSString *const BFTaskMultipleErrorsUserInfoKey = @"errors";
     return self;
 }
 
-- (instancetype)initWithException:(NSException *)exception {
-    self = [super init];
-    if (!self) return self;
-
-    [self trySetException:exception];
-
-    [BFTask addTestTask:self];
-    return self;
-}
-
 - (instancetype)initCancelled {
     self = [super init];
     if (!self) return self;
